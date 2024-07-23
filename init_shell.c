@@ -24,6 +24,11 @@ char **copy_env(char **env)
     to_copy[i] == NULL;
     return (to_copy);
 }
+
+char *take_prompt(t_list shell)
+{
+    
+}
 void display_prompt(t_list shell)
 {
     char *prompt;

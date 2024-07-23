@@ -13,3 +13,4 @@ typedef struct s_list
 
 void display_prompt(t_list shell);
 char **copy_env(char **env);
+void check_unclosed_quotes(char *input);
