@@ -3,10 +3,12 @@
 int main(int ac, char **av, char **env)
 {
     t_list shell;
+
+    (void)av;
+    (void)ac;
     shell.env_var = copy_env(env);
-    while(1)
-    {
-        display_prompt(shell);
-    }
+    display_prompt(shell);
+    
+
     
 }

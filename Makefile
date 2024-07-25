@@ -2,7 +2,7 @@ CC = cc
 FLAGS = -Wall -Wextra -Werror 
 RFLAGS = -lreadline -lncurses
 NAME = minishell
-SRC = parsing.c libft_functions.c
+SRC = check_errors.c init_shell.c minishell.c tokenize.c
 OBJ = $(SRC:.c=.o)
 
 all         : $(NAME)

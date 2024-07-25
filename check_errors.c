@@ -18,8 +18,5 @@ void check_unclosed_quotes(char *input)
         i++;
     }
     if (double_quotes % 2 != 0 || single_quotes % 2 != 0)
-    {
-        printf("input is not correct\n");
-        exit(1);
-    }
+        printf("unclosed quotes\n");
 }

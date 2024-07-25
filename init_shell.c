@@ -21,26 +21,20 @@ char **copy_env(char **env)
         to_copy[i] = strdup(env[i]);
         i++;
     }
-    to_copy[i] == NULL;
+    to_copy[i] = NULL;
     return (to_copy);
 }
 
-char *take_prompt(t_list shell)
-{
-    
-}
 void display_prompt(t_list shell)
 {
-    char *prompt;
     char *input;
-
-    prompt = take_prompt(shell);//implement this
-    input = readline(prompt);
-    if (!input)
+    while(1)
     {
-        return;
+        input = readline("minishell$");
+        if (!input)
+            exit(1);
+        add_history(input);
+        check_unclosed_quotes(input);
+        shell.tokens = into_tokens(input);
     }
-    add_history(input);
-    check_unclosed_quotes(input);
-
 }
