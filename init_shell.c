@@ -28,13 +28,20 @@ char **copy_env(char **env)
 void display_prompt(t_list shell)
 {
     char *input;
+    int i = 0;
     while(1)
     {
-        input = readline("minishell$");
+        input = readline("minishell$  ");
         if (!input)
             exit(1);
         add_history(input);
         check_unclosed_quotes(input);
         shell.tokens = into_tokens(input);
+        while(shell.tokens[i])
+        {
+            printf("%s\n", shell.tokens[i]);
+            i++;
+        }
+        i = 0;
     }
 }

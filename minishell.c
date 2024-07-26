@@ -9,6 +9,7 @@ int main(int ac, char **av, char **env)
     shell.env_var = copy_env(env);
     display_prompt(shell);
     
+    
 
     
 }

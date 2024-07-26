@@ -67,9 +67,9 @@ char *cat_token(char *input, int start, int end)
     token = malloc (sizeof(char) * len);
     while (start < end)
     {
-        if (input[start] == '"' || input[start] == '\'')
-            start++;
-        if (input[end] == '"' || input[end] == '\'')
+        while (input[start] == '"' || input[start] == '\'')
+            start++; 
+        while (input[end] == '"' || input[end] == '\'')
             end--;
         token[i] = input[start];
         start++;
