@@ -35,7 +35,8 @@ void display_prompt(t_list shell)
         if (!input)
             exit(1);
         add_history(input);
-        check_unclosed_quotes(input);
+        if (check_unclosed_quotes(input) || check_prohibited_char(input) || !validate_redirection_syntax(input))
+            continue;
         shell.tokens = into_tokens(input);
         while(shell.tokens[i])
         {
@@ -43,5 +44,6 @@ void display_prompt(t_list shell)
             i++;
         }
         i = 0;
+        // printf("%d\n", tokens_number(input));
     }
 }

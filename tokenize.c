@@ -22,7 +22,12 @@ int tokens_number(char *input)
         if (input[i] == '\'' || input[i] == '"')
             notif = -notif;
         else if ((input[i] == ' ' || input[i] == '\t') && notif > 0)
+        {
             count++;
+            while ((input[i] == ' ' || input[i] == '\t') && notif > 0)
+                i++;
+            i--;
+        }
         i++;
     }
     return count + 1;
@@ -97,6 +102,8 @@ char **into_tokens(char *input)
             last_start = 0;
         else
             last_start = start + 1;
+        while (input[last_start] == ' ' || input[last_start] == '\t')
+            last_start++;
         start = divide(input, last_start);
         tokens[i] = cat_token(input, last_start, start);
         i++;
@@ -104,3 +111,4 @@ char **into_tokens(char *input)
     tokens[i] = NULL;
     return (tokens);
 }
+

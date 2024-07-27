@@ -17,7 +17,12 @@ typedef struct s_list
 
 void display_prompt(t_list shell);
 char **copy_env(char **env);
-void check_unclosed_quotes(char *input);
+int check_unclosed_quotes(char *input);
 char **into_tokens(char *input);
-
+int check_prohibited_char(char *input);
+int is_redirection_op(char c);
+int skip_spaces(char *input, int i);
+int validate_redirection_syntax(char *input);
+int tokens_number(char *input);
+int more_than_op(char *input);
 #endif
