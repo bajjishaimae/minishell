@@ -63,7 +63,28 @@ int divide(char *input, int start)
     end = start;
     return (end);
 }
-
+// t_token *cat_token(char *input, int start, int end)
+// {
+//     t_token *token;
+//     int i = 0;
+//     int len = end - start + 1;
+//     token = malloc (sizeof(t_token));
+//     token->content = malloc (sizeof(char) * len);
+//     while (start < end)
+//     {
+//         while (input[start] == '"' || input[start] == '\'')
+//             start++; 
+//         while (input[end] == '"' || input[end] == '\'')
+//             end--;
+//         token->content[i] = input[start];
+//         start++;
+//         i++;
+//     }
+//     token->content[i] = '\0';
+//     token->type = NULL;
+//     // token[i] = '\0';
+//     return (token);
+// }
 char *cat_token(char *input, int start, int end)
 {
     char *token;
@@ -84,10 +105,10 @@ char *cat_token(char *input, int start, int end)
     return (token);
 }
 
-char **into_tokens(char *input)
+t_token **into_tokens(char *input)
 {
     int i;
-    char **tokens;
+    t_token **tokens;
     int count;
     int start;
     int last_start;
@@ -95,9 +116,10 @@ char **into_tokens(char *input)
     i = 0;
     start = 0;
     count = tokens_number(input);
-    tokens = malloc(sizeof(char *) * count + 1);
+    tokens = malloc(sizeof(t_token *) * (count + 1));
     while (i < count)
     {
+        tokens[i] = malloc(sizeof(t_token));
         if (start == 0)
             last_start = 0;
         else
@@ -105,10 +127,9 @@ char **into_tokens(char *input)
         while (input[last_start] == ' ' || input[last_start] == '\t')
             last_start++;
         start = divide(input, last_start);
-        tokens[i] = cat_token(input, last_start, start);
+        tokens[i]->content = cat_token(input, last_start, start);
         i++;
     }
     tokens[i] = NULL;
     return (tokens);
 }
-

@@ -10,7 +10,7 @@ char **copy_env(char **env)
     size = 0;
     while (env[size])
         size++;
-    to_copy = malloc (sizeof(char *) * size + 1);
+    to_copy = malloc (sizeof(char *) * (size + 1));
     if (!to_copy)
     {
         exit(1);
@@ -28,7 +28,7 @@ char **copy_env(char **env)
 void display_prompt(t_list shell)
 {
     char *input;
-    int i = 0;
+    //i = 0;
     while(1)
     {
         input = readline("minishell$  ");
@@ -38,12 +38,13 @@ void display_prompt(t_list shell)
         if (check_unclosed_quotes(input) || check_prohibited_char(input) || !validate_redirection_syntax(input))
             continue;
         shell.tokens = into_tokens(input);
-        while(shell.tokens[i])
-        {
-            printf("%s\n", shell.tokens[i]);
-            i++;
-        }
-        i = 0;
+        // while(shell.tokens[i])
+        // {
+        //     printf("%s\n", shell.tokens[i]->content);
+        //     i++;
+        // }
+        // i = 0;
+        
         // printf("%d\n", tokens_number(input));
     }
 }

@@ -1,4 +1,4 @@
-CC = cc
+CC = cc -g -fsanitize=address
 FLAGS = -Wall -Wextra -Werror 
 RFLAGS = -lreadline -lncurses
 NAME = minishell

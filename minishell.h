@@ -9,16 +9,22 @@
 #include <readline/history.h>
 
 
+typedef struct s_token
+{
+    char *content;
+    char *type;
+} t_token;
+
 typedef struct s_list
 {
     char **env_var;
-    char **tokens;
+    t_token **tokens;
 } t_list;
 
 void display_prompt(t_list shell);
 char **copy_env(char **env);
 int check_unclosed_quotes(char *input);
-char **into_tokens(char *input);
+t_token **into_tokens(char *input);
 int check_prohibited_char(char *input);
 int is_redirection_op(char c);
 int skip_spaces(char *input, int i);
