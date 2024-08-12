@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <strings.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -13,6 +14,7 @@ typedef struct s_token
 {
     char *content;
     char *type;
+    int need_expand;
 } t_token;
 
 typedef struct s_list
@@ -31,4 +33,5 @@ int skip_spaces(char *input, int i);
 int validate_redirection_syntax(char *input);
 int tokens_number(char *input);
 int more_than_op(char *input);
+void check_token_dollar(t_token **token);
 #endif
