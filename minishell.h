@@ -34,4 +34,5 @@ int validate_redirection_syntax(char *input);
 int tokens_number(char *input);
 int more_than_op(char *input);
 void check_token_dollar(t_token **token);
+int ft_strlen(char *str);
 #endif

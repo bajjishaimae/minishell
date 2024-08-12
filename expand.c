@@ -74,35 +74,46 @@ char *get_value(char **env_vars, int len, char *name)
 
 }
 
-void replace_it(char *input, char *value)
+char *replace_value(char *token, char *value, char *name)
+{
+    int name_len = ft_strlen(name);
+    int token_len = ft_strlen(token);
+    int value_len = ft_strlen(value);
+    int new_token_len = (token_len - name_len) + value_len;
+    char *new_token = malloc (sizeof(char) * new_token_len);
+    char *pos = strstr(token, name);
+
+    strncpy(new_token, token, pos - token);
+    strcpy(new_token + (pos - token), value);
+    strcpy(new_token + (pos - token) + value_len ,pos + name_len);
+
+    return (new_token);
+}
+
+void expand(t_token **tokens, char *input, t_list shell)
 {
     int i = 0;
-    while (input[i])
+    char *name;
+    int name_len;
+    char *value;
+    char *new_token;
+    check_token_dollar(shell.tokens);
+
+    while (tokens[i])
     {
-        if (input[i] == '$')
+        if(!tokens[i]->need_expand || !can_expand(tokens[i]->content))
         {
-
+            i++;
+            continue;
         }
-
+        name = variable_name(tokens[i]->content);
+        name_len = ft_strlen(name);
+        value = get_value(shell.env_var, name_len, name);
+        new_token = replace_value(tokens[i]->content, value, name);
+        free(tokens[i]->content);
+        tokens[i]->content = new_token;
+        i++;
     }
 }
 
-void expand(char *input, t_list shell)
-{
-    if (can_expand(input))
-}
-
-int main()
-{
-    char **env;
-    env = malloc (sizeof(char *) * 3);
-    int i = 0;
-    
-    env[0] = strdup("USER=bajjishaima");
-    env[1] = strdup("HOME=/home/bajjishaima");
-    env[2] = strdup("NAME=DESKTOP-ATD8A5U");
-
-
-   printf("%s\n", get_value(env, 4, "USER"));
-}
 

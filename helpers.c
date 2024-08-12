@@ -58,3 +58,11 @@ void check_token_dollar(t_token **token)
         i++;
     }
 }
+
+int ft_strlen(char *str)
+{
+    int i = 0;
+    while (str[i])
+        i++;
+    return i;
+}
