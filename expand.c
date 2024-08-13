@@ -74,15 +74,26 @@ char *get_value(char **env_vars, int len, char *name)
 
 char *replace_value(char *token, char *value, char *name)
 {
+    int ignore_dollar;
     int name_len = strlen(name);
     int token_len = strlen(token);
     int value_len = strlen(value);
-    int new_token_len = (token_len - name_len - 1) + value_len;
-    char *new_token = malloc (sizeof(char) * new_token_len + 1);
+    int new_token_len;
     char *pos = strstr(token, name);
+    if (!strcmp(name, "~"))
+    {
+        ignore_dollar = pos - token;
+        new_token_len = (token_len - name_len) + value_len;
+    }
+    else 
+    {
+        ignore_dollar = (pos - token) - 1;
+        new_token_len = (token_len - name_len - 1) + value_len;
+    }
+    char *new_token = malloc (sizeof(char) * new_token_len + 1);
 
-    strncpy(new_token, token, (pos - token) - 1);
-    new_token[(pos - token) - 1] = '\0';
+    strncpy(new_token, token, ignore_dollar);
+    new_token[ignore_dollar] = '\0';
     strcat(new_token, value);
     strcat(new_token, pos + name_len);
     return (new_token);
@@ -106,11 +117,8 @@ void expand(t_token **tokens, t_list shell)
             continue;
         }
         name = variable_name(tokens[i]->content);
-        printf("%s\n", name);
         name_len = ft_strlen(name);
-        printf("%d\n", name_len);
         value = get_value(shell.env_var, name_len, name);
-        printf("%s\n", value);
         new_token = replace_value(tokens[i]->content, value, name);
         printf("%s\n", new_token);
         free(tokens[i]->content);
@@ -118,5 +126,6 @@ void expand(t_token **tokens, t_list shell)
         i++;
     }
 }
+
 
 

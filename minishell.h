@@ -36,4 +36,7 @@ int more_than_op(char *input);
 void check_token_dollar(t_token **token);
 int ft_strlen(char *str);
 void expand(t_token **tokens, t_list shell);
+char *get_value(char **env_vars, int len, char *name);
+char *replace_value(char *token, char *value, char *name);
+void expand_home(t_token **tokens, t_list shell);
 #endif

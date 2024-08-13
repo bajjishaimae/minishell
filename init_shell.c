@@ -29,7 +29,7 @@ void display_prompt(t_list shell)
 {
     char *input;
     (void)shell;
-    // int i = 0;
+    int i = 0;
     while(1)
     {
         input = readline("minishell$  ");
@@ -39,14 +39,29 @@ void display_prompt(t_list shell)
         if (check_unclosed_quotes(input) || check_prohibited_char(input) || !validate_redirection_syntax(input))
             continue;
         shell.tokens = into_tokens(input);
-       
+    //     printf("tokens before expanding\n");
+    //    while(shell.tokens[i])
+    //     {
+    //         printf("%s\n", shell.tokens[i]->content);
+    //         i++;
+    //     }
+    //     i = 0;
         expand(shell.tokens, shell);
-        // while(shell.tokens[i])
-        // {
-        //     printf("%s\n", shell.tokens[i]->content);
-        //     i++;
-        // }
-        // i = 0;
+    //     printf("tokens after first expand dollar \n");
+    //     while(shell.tokens[i])
+    //     {
+    //         printf("%s\n", shell.tokens[i]->content);
+    //         i++;
+    //     }
+    //     i = 0;
+        expand_home(shell.tokens, shell);
+
+        while(shell.tokens[i])
+        {
+            printf("%s\n", shell.tokens[i]->content);
+            i++;
+        }
+        i = 0;
         
         // printf("%d\n", tokens_number(input));
     }
