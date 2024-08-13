@@ -2,23 +2,21 @@
 
 int can_expand(char *input)
 {
-    int d_quote;
-    int s_quote_index;
-    int d_quote_index;
+    int d_quote = 0;
+    int s_quote = 0; 
     int i = 0;
 
-    d_quote = -1;
     while (input[i])
     {
         if (input[i] == '"')
-        {
-            d_quote = -d_quote;
-            d_quote_index = i;
-        }
-        else if (input[i] == '\'')
-            s_quote_index = i;
-        if (input[i] == '$' && d_quote_index < s_quote_index && d_quote > 0)
+            d_quote = !d_quote;
+
+        if (input[i] == '\'' && d_quote == 0)
+            s_quote = !s_quote; 
+
+        if (input[i] == '$' && (d_quote || !s_quote))
             return (1);
+
         i++;
     }
     return (0);
@@ -76,21 +74,22 @@ char *get_value(char **env_vars, int len, char *name)
 
 char *replace_value(char *token, char *value, char *name)
 {
-    int name_len = ft_strlen(name);
-    int token_len = ft_strlen(token);
-    int value_len = ft_strlen(value);
-    int new_token_len = (token_len - name_len) + value_len;
-    char *new_token = malloc (sizeof(char) * new_token_len);
+    int name_len = strlen(name);
+    int token_len = strlen(token);
+    int value_len = strlen(value);
+    int new_token_len = (token_len - name_len - 1) + value_len;
+    char *new_token = malloc (sizeof(char) * new_token_len + 1);
     char *pos = strstr(token, name);
 
-    strncpy(new_token, token, pos - token);
-    strcpy(new_token + (pos - token), value);
-    strcpy(new_token + (pos - token) + value_len ,pos + name_len);
-
+    strncpy(new_token, token, (pos - token) - 1);
+    new_token[(pos - token) - 1] = '\0';
+    strcat(new_token, value);
+    strcat(new_token, pos + name_len);
     return (new_token);
 }
 
-void expand(t_token **tokens, char *input, t_list shell)
+
+void expand(t_token **tokens, t_list shell)
 {
     int i = 0;
     char *name;
@@ -107,9 +106,13 @@ void expand(t_token **tokens, char *input, t_list shell)
             continue;
         }
         name = variable_name(tokens[i]->content);
+        printf("%s\n", name);
         name_len = ft_strlen(name);
+        printf("%d\n", name_len);
         value = get_value(shell.env_var, name_len, name);
+        printf("%s\n", value);
         new_token = replace_value(tokens[i]->content, value, name);
+        printf("%s\n", new_token);
         free(tokens[i]->content);
         tokens[i]->content = new_token;
         i++;

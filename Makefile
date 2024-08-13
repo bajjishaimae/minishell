@@ -1,8 +1,8 @@
 CC = cc
-FLAGS = -Wall -Wextra -Werror 
+FLAGS = -g -Wall -Wextra -Werror -fsanitize=address
 RFLAGS = -lreadline -lncurses
 NAME = minishell
-SRC = check_errors.c init_shell.c minishell.c tokenize.c helpers.c
+SRC = check_errors.c init_shell.c minishell.c tokenize.c helpers.c expand.c 
 OBJ = $(SRC:.c=.o)
 
 all         : $(NAME)

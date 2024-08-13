@@ -35,4 +35,5 @@ int tokens_number(char *input);
 int more_than_op(char *input);
 void check_token_dollar(t_token **token);
 int ft_strlen(char *str);
+void expand(t_token **tokens, t_list shell);
 #endif

@@ -49,9 +49,9 @@ int ft_strchr(char *s, int c)
 void check_token_dollar(t_token **token)
 {
     int i = 0;
-    while(token[i]->content)
+    while (token[i])
     {
-        if (ft_strchr(token[i]->content, '$'))
+        if (token[i]->content && ft_strchr(token[i]->content, '$'))
             token[i]->need_expand = 1;
         else 
             token[i]->need_expand = 0;
