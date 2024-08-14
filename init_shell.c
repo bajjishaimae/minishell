@@ -28,6 +28,7 @@ char **copy_env(char **env)
 void display_prompt(t_list shell)
 {
     char *input;
+    t_node *list;
     (void)shell;
     int i = 0;
     while(1)
@@ -39,23 +40,9 @@ void display_prompt(t_list shell)
         if (check_unclosed_quotes(input) || check_prohibited_char(input) || !validate_redirection_syntax(input))
             continue;
         shell.tokens = into_tokens(input);
-    //     printf("tokens before expanding\n");
-    //    while(shell.tokens[i])
-    //     {
-    //         printf("%s\n", shell.tokens[i]->content);
-    //         i++;
-    //     }
-    //     i = 0;
         expand(shell.tokens, shell);
-    //     printf("tokens after first expand dollar \n");
-    //     while(shell.tokens[i])
-    //     {
-    //         printf("%s\n", shell.tokens[i]->content);
-    //         i++;
-    //     }
-    //     i = 0;
         expand_home(shell.tokens, shell);
-
+        list = search_token(shell.tokens);
         while(shell.tokens[i])
         {
             printf("%s\n", shell.tokens[i]->content);

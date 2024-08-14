@@ -13,7 +13,6 @@
 typedef struct s_token
 {
     char *content;
-    char *type;
     int need_expand;
 } t_token;
 
@@ -22,6 +21,13 @@ typedef struct s_list
     char **env_var;
     t_token **tokens;
 } t_list;
+
+typedef struct s_node
+{
+    char *content;
+    char *type;
+    struct s_node next;
+} t_node;
 
 void display_prompt(t_list shell);
 char **copy_env(char **env);
@@ -39,4 +45,10 @@ void expand(t_token **tokens, t_list shell);
 char *get_value(char **env_vars, int len, char *name);
 char *replace_value(char *token, char *value, char *name);
 void expand_home(t_token **tokens, t_list shell);
+int ft_strchr(char *s, int c);
+t_node *search_token(t_token **tokens);
+
+//libft
+t_node	*ft_lstnew(char *content);
+void	ft_lstadd_back(t_node **lst, t_node *new);
 #endif
