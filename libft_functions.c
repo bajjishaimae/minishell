@@ -6,7 +6,7 @@
 /*   By: cbajji <cbajji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 20:20:17 by cbajji            #+#    #+#             */
-/*   Updated: 2024/08/14 20:44:35 by cbajji           ###   ########.fr       */
+/*   Updated: 2024/08/16 14:20:04 by cbajji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ t_node	*ft_lstnew(char *content)
 {
 	t_node	*head;
 
-	head = malloc(sizeof(t_list));
+	head = malloc(sizeof(t_node));
 	if (!head)
 		return (NULL);
 	head->content = content;
+	head->type = NULL;
 	head->next = NULL;
 	return (head);
 }

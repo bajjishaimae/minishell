@@ -30,7 +30,7 @@ void display_prompt(t_list shell)
     char *input;
     t_node *list;
     (void)shell;
-    int i = 0;
+    // int i = 0;
     while(1)
     {
         input = readline("minishell$  ");
@@ -43,12 +43,17 @@ void display_prompt(t_list shell)
         expand(shell.tokens, shell);
         expand_home(shell.tokens, shell);
         list = search_token(shell.tokens);
-        while(shell.tokens[i])
+        while(list->next)
         {
-            printf("%s\n", shell.tokens[i]->content);
-            i++;
+            printf("%s\n", list->content);
+            list = list->next;
         }
-        i = 0;
+        // while(shell.tokens[i])
+        // {
+        //     printf("%s\n", shell.tokens[i]->content);
+        //     i++;
+        // }
+        // i = 0;
         
         // printf("%d\n", tokens_number(input));
     }

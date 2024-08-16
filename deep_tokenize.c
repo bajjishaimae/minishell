@@ -6,7 +6,7 @@
 /*   By: cbajji <cbajji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 12:21:42 by cbajji            #+#    #+#             */
-/*   Updated: 2024/08/14 22:58:52 by cbajji           ###   ########.fr       */
+/*   Updated: 2024/08/16 16:39:48 by cbajji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void divide_and_add(t_node **list, char *content)
                 strncpy(token, content + start, len);
                 token[len] = '\0';
                 add_node(list, token);
-                free(token);
             }
 
             if (content[i + 1] == content[i])
@@ -59,7 +58,6 @@ void divide_and_add(t_node **list, char *content)
                 token[1] = content[i];
                 token[2] = '\0';
                 add_node(list, token);
-                free(token);
                 i += 2;
             }
             else 
@@ -69,7 +67,6 @@ void divide_and_add(t_node **list, char *content)
                 token[0] = content[i];
                 token[1] = '\0';
                 add_node(list, token);
-                free(token);
                 i++;
             }
 
@@ -89,7 +86,6 @@ void divide_and_add(t_node **list, char *content)
         strncpy(token, content + start, len);
         token[len] = '\0';
         add_node(list, token);
-        free(token);
     }
 }
 
@@ -111,4 +107,6 @@ t_node *search_token(t_token **tokens)
     }
     return list;
 }
+
+
 

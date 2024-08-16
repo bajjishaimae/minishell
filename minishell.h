@@ -26,7 +26,7 @@ typedef struct s_node
 {
     char *content;
     char *type;
-    struct s_node next;
+    struct s_node *next;
 } t_node;
 
 void display_prompt(t_list shell);
