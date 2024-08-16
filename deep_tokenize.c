@@ -6,11 +6,19 @@
 /*   By: cbajji <cbajji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 12:21:42 by cbajji            #+#    #+#             */
-/*   Updated: 2024/08/16 16:39:48 by cbajji           ###   ########.fr       */
+/*   Updated: 2024/08/16 17:04:43 by cbajji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int inside_quotes(char *str)
+{
+    int len = ft_strlen(str);
+    if ((str[0] == '"' || str[0] == '\'') && (str[len - 1] == '"' || str[len - 1] == '\''))
+        return (1);
+    return (0);
+}
 
 int contains_only_symbol(char *str)
 {
@@ -95,7 +103,7 @@ t_node *search_token(t_token **tokens)
     t_node *list = NULL;
     while (tokens[i])
     {
-        if (!contains_only_symbol(tokens[i]->content) && contains_symbol(tokens[i]->content))
+        if (!contains_only_symbol(tokens[i]->content) && contains_symbol(tokens[i]->content) && !inside_quotes(tokens[i]->content))
         {
             divide_and_add(&list, tokens[i]->content);
         }
