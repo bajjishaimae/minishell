@@ -43,12 +43,15 @@ void display_prompt(t_list shell)
         expand(shell.tokens, shell);
         expand_home(shell.tokens, shell);
         list = search_token(shell.tokens);
-        t_node *copy = list;
-        while(copy)
-        {
-            printf("%s\n", copy->content);
-            copy = copy->next;
-        }
+        
+    }
+}
+        // t_node *copy = list;
+        // while(copy)
+        // {
+        //     printf("%s\n", copy->content);
+        //     copy = copy->next;
+        // }
         // while(shell.tokens[i])
         // {
         //     printf("%s\n", shell.tokens[i]->content);
@@ -57,5 +60,3 @@ void display_prompt(t_list shell)
         // i = 0;
         
         // printf("%d\n", tokens_number(input));
-    }
-}

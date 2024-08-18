@@ -25,9 +25,15 @@ typedef struct s_list
 typedef struct s_node
 {
     char *content;
-    char *type;
+    int type;
     struct s_node *next;
 } t_node;
+
+typedef struct s_line
+{
+    t_node *token;
+    int redic;
+} t_line;
 
 void display_prompt(t_list shell);
 char **copy_env(char **env);
