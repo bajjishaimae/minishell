@@ -31,8 +31,9 @@ typedef struct s_node
 
 typedef struct s_line
 {
-    t_node *token;
+    t_node *tokens;
     int redic;
+    struct s_line *next;
 } t_line;
 
 void display_prompt(t_list shell);
