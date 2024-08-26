@@ -36,6 +36,12 @@ typedef struct s_line
     struct s_line *next;
 } t_line;
 
+// argv
+// argc
+// fd_in
+// fd_out
+// rede
+// 
 void display_prompt(t_list shell);
 char **copy_env(char **env);
 int check_unclosed_quotes(char *input);
@@ -54,6 +60,7 @@ char *replace_value(char *token, char *value, char *name);
 void expand_home(t_token **tokens, t_list shell);
 int ft_strchr(char *s, int c);
 t_node *search_token(t_token **tokens);
+t_line *tokens_to_lines(t_node *tokens);
 
 //libft
 t_node	*ft_lstnew(char *content);

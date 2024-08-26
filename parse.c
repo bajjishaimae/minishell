@@ -6,7 +6,7 @@
 /*   By: cbajji <cbajji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 12:20:30 by cbajji            #+#    #+#             */
-/*   Updated: 2024/08/18 21:51:57 by cbajji           ###   ########.fr       */
+/*   Updated: 2024/08/25 15:48:10 by cbajji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	redirections_classifier(t_node **lst_token)
 	current = *lst_token;
 	while (current)
 	{
-		if (current->type == 4 && !ft_strcmp(current->content, "<")
-			&& current->next != NULL && ft_strcmp(current->next->content, ">"))
+		if (current->type == 4 && !strcmp(current->content, "<")
+			&& current->next != NULL && strcmp(current->next->content, ">"))
 			current->next->type = 4;
-		else if (current->type == 5 && (!ft_strcmp(current->content, ">")
-				|| !ft_strcmp(current->content, ">>")) && current->next != NULL)
+		else if (current->type == 5 && (!strcmp(current->content, ">")
+				|| !strcmp(current->content, ">>")) && current->next != NULL)
 			current->next->type = 5;
-		else if (current->type == 3 && (!ft_strcmp(current->content, "<<"))
+		else if (current->type == 3 && (!strcmp(current->content, "<<"))
 			&& current->next != NULL)
 			current->next->type = 3;
 		current = current->next;
@@ -63,50 +63,117 @@ void giving_type(t_node *token)
 
 t_line *create_line(t_node *node)
 {
-   t_line *line;
-   t_node *current;
-   t_node *first = NULL;
-   line = malloc (sizeof(t_line));
-   current = node;
-   while(current && strcmp(current->content, "|"))
-   {
+    t_line *line;
+    t_node *current = node;
+    t_node *first = NULL;
+    t_node *last = NULL;
+
+    line = malloc(sizeof(t_line));
+    if (!line)
+        return NULL;
+    line->tokens = NULL;
+    
+    while (current && strcmp(current->content, "|") != 0)
+    {
+        t_node *new_node = malloc(sizeof(t_node));
+        if (!new_node)
+            return NULL;
+        new_node->content = current->content; // Copy the content
+        new_node->type = current->type;       // Copy the type
+        new_node->next = NULL;                // Initialize next to NULL
+        
         if (!first)
-            first = node;
+        {
+            first = new_node;
+            line->tokens = first;
+        }
         else
-            current->next = node;
-        current = node;
-        node = node->next;
-   }
-   if (current)
-        current->next = NULL;
-    line = first;
+        {
+            last->next = new_node;
+        }
+        
+        last = new_node;
+        current = current->next;
+    }
+    
+    line->next = NULL;
     redirections_classifier(&line->tokens);
-    return (line);
+    return line;
 }
 
 
 t_line *tokens_to_lines(t_node *tokens)
 {
     t_line *first_line = NULL;
-    int flag = 0;
-    t_line *line = NULL;
+    t_line *last_line = NULL;
+    t_line *line;
 
+    giving_type(tokens);
+    // t_node *cpy = tokens;
+    // while (cpy)
+    // {
+    //     printf("%s\n", cpy->content);
+    //     cpy = cpy->next;
+    // }
+    // t_node *cpy_two;
     while (tokens)
     {
-        if (flag == 0)
+        line = create_line(tokens);
+    //     cpy_two = tokens;
+    //     while (cpy_two)
+    // {
+    //     printf("%s\n", cpy_two->content);
+    //     cpy_two = cpy_two->next;
+    // }
+        if (!first_line)
+            first_line = line;
+        else
+            last_line->next = line;
+        last_line = line;
+        while (tokens && strcmp(tokens->content, "|") != 0)
         {
-            line = create_line(tokens);
-            if (!first_line)
-                first_line = line;
-            ft_lstadd_back(&first_line, line);
-            flag = 1;
+            
+            // printf("%s\n", tokens->content);
+            tokens = tokens->next;
+            
         }
-        else if (strcmp(tokens->content, "|") == 0)
+        // printf("%s\n", tokens->content);
+        
+        if (tokens && strcmp(tokens->content, "|") == 0)
         {
-            flag = 0;
+            tokens = tokens->next;
+            // printf("///////////////\n");
         }
-        tokens = tokens->next;
     }
-
     return first_line;
 }
+// t_line *create_line(t_node *node)
+// {
+//     t_line *line;
+//     t_node *current = node;
+//     t_node *first = NULL;
+//     t_node *last = NULL;
+//     t_node *cpy = node;
+
+//     line = malloc(sizeof(t_line));
+//     if (!line)
+//         return NULL;
+//     line->tokens = NULL;
+//     while (current && strcmp(current->content, "|") != 0)
+//     {
+//         if (!first)
+//         {
+//             first = current;
+//             line->tokens = first;
+//         }
+//         else
+//             last->next = current;
+//         last = current;
+//         current = current->next;
+//     }
+//     if (last)
+//         last->next = NULL;
+//     line->next = NULL;
+//     redirections_classifier(&line->tokens);
+//     return line;
+// }

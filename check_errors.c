@@ -2,28 +2,31 @@
 
 int check_unclosed_quotes(char *input)
 {
-    int double_quotes;
-    int single_quotes;
-    int i;
+    int i = 0;
+    int inside_d = 0;
+    int inside_s = 0;
 
-    i = 0;
-    double_quotes = 0;
-    single_quotes = 0;
     while (input[i])
     {
-        if (input[i] == '"')
-            double_quotes++;
-        if (input[i] == '\'')
-            single_quotes++;
+        if (input[i] == '"' && !inside_s)
+        {
+            inside_d = !inside_d;
+        }
+        else if (input[i] == '\'' && !inside_d)
+        {
+            inside_s = !inside_s;
+        }
         i++;
     }
-    if (double_quotes % 2 != 0 || single_quotes % 2 != 0)
+
+    if (inside_d || inside_s)
     {
         printf("unclosed quotes\n");
-        return (1);
+        return 1;
     }
-    return (0);
+    return 0;
 }
+
 
 int check_prohibited_char(char *input)
 {

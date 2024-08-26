@@ -1,5 +1,34 @@
 #include "minishell.h"
 
+void print_token(t_node *token)
+{
+    printf("Token: %s, Type: %d\n", token->content, token->type);
+}
+
+// Function to print all tokens in a line
+void print_line(t_line *line)
+{
+    t_node *current_token = line->tokens;
+    printf("Line:\n");
+    while (current_token)
+    {
+        print_token(current_token);
+        current_token = current_token->next;
+    }
+    printf("\n");
+}
+
+// Function to print all lines
+void print_lines(t_line *lines)
+{
+    t_line *current_line = lines;
+    while (current_line)
+    {
+        print_line(current_line);
+        current_line = current_line->next;
+    }
+}
+
 char **copy_env(char **env)
 {
     int size;
@@ -30,6 +59,7 @@ void display_prompt(t_list shell)
     char *input;
     t_node *list;
     (void)shell;
+    t_line *lines;
     // int i = 0;
     while(1)
     {
@@ -43,13 +73,12 @@ void display_prompt(t_list shell)
         expand(shell.tokens, shell);
         expand_home(shell.tokens, shell);
         list = search_token(shell.tokens);
-        
-    }
-}
-        // t_node *copy = list;
+        lines = tokens_to_lines(list);
+        // t_line *copy = lines;
+        print_lines(lines);
         // while(copy)
         // {
-        //     printf("%s\n", copy->content);
+        //     printf("%s\n", copy->tokens->content);
         //     copy = copy->next;
         // }
         // while(shell.tokens[i])
@@ -57,6 +86,8 @@ void display_prompt(t_list shell)
         //     printf("%s\n", shell.tokens[i]->content);
         //     i++;
         // }
+    }
+}
         // i = 0;
         
         // printf("%d\n", tokens_number(input));

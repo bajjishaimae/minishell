@@ -6,7 +6,7 @@
 /*   By: cbajji <cbajji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 20:20:17 by cbajji            #+#    #+#             */
-/*   Updated: 2024/08/16 14:20:04 by cbajji           ###   ########.fr       */
+/*   Updated: 2024/08/19 09:48:45 by cbajji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_node	*ft_lstnew(char *content)
 	if (!head)
 		return (NULL);
 	head->content = content;
-	head->type = NULL;
 	head->next = NULL;
 	return (head);
 }
