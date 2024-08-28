@@ -21,19 +21,39 @@ int can_expand(char *input)
     }
     return (0);
 }
+int dollars_number(char *content, int need_exp)
+{
+    int i = 0;
+    int counter = 0;
+    if (can_expand(content) && need_exp)
+    {
+        while(content[i])
+        {
+            if (content[i] == '$')
+                counter++;
+            i++;
+        }
+    }
+    return (counter);
+}
+
 
 char *variable_name(char *input)
 {
-    int len = 0;
     int start = 0;
     int i = 0;
-
+    int len;
+    
     while (input[i] && input[i] != '$')
         i++;
     start = i + 1;
-    while (input[i] && input[i] != ' ')
+    i++;
+    while (input[i] && input[i] != ' ' && input[i] != '$')
         i++;
-    len = i - start;
+    if (input[0] == '"' && input[i] == '\0')
+      len = i - start - 1;
+    else
+      len = i - start;
     char *var_name = malloc(sizeof(char) * (len + 1));
     if (var_name) {
         strncpy(var_name, input + start, len);
@@ -41,6 +61,7 @@ char *variable_name(char *input)
     }
     return var_name;
 }
+
 
 char *get_value(char **env_vars, int len, char *name)
 {
@@ -95,7 +116,7 @@ char *replace_value(char *token, char *value, char *name)
     strncpy(new_token, token, ignore_dollar);
     new_token[ignore_dollar] = '\0';
     strcat(new_token, value);
-    strcat(new_token, pos + name_len);
+    strcat(new_token, pos + name_len); 
     return (new_token);
 }
 
@@ -107,25 +128,31 @@ void expand(t_token **tokens, t_list shell)
     int name_len;
     char *value;
     char *new_token;
+    char *temp_token;
+    int counter;
+
     check_token_dollar(shell.tokens);
 
     while (tokens[i])
     {
-        if(!tokens[i]->need_expand || !can_expand(tokens[i]->content))
+        counter = dollars_number(tokens[i]->content, tokens[i]->need_expand);
+        if (counter == 0)
         {
             i++;
             continue;
         }
-        name = variable_name(tokens[i]->content);
-        name_len = ft_strlen(name);
-        value = get_value(shell.env_var, name_len, name);
-        new_token = replace_value(tokens[i]->content, value, name);
-        printf("%s\n", new_token);
-        free(tokens[i]->content);
+        temp_token = tokens[i]->content;
+        while (counter)
+        {
+            
+            name = variable_name(temp_token);
+            name_len = strlen(name);
+            value = get_value(shell.env_var, name_len, name);
+            new_token = replace_value(temp_token, value, name);
+            temp_token = new_token;
+            counter--;
+        }
         tokens[i]->content = new_token;
         i++;
     }
 }
-
-
-

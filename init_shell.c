@@ -70,6 +70,7 @@ void display_prompt(t_list shell)
         if (check_unclosed_quotes(input) || check_prohibited_char(input) || !validate_redirection_syntax(input))
             continue;
         shell.tokens = into_tokens(input);
+        check_token_dollar(shell.tokens);
         expand(shell.tokens, shell);
         expand_home(shell.tokens, shell);
         list = search_token(shell.tokens);
@@ -83,7 +84,7 @@ void display_prompt(t_list shell)
         // }
         // while(shell.tokens[i])
         // {
-        //     printf("%s\n", shell.tokens[i]->content);
+        //     printf("%s       %d\n", shell.tokens[i]->content, shell.tokens[i]->need_expand);
         //     i++;
         // }
     }

@@ -59,6 +59,7 @@ void check_token_dollar(t_token **token)
     }
 }
 
+
 int ft_strlen(char *str)
 {
     int i = 0;
