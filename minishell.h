@@ -37,12 +37,7 @@ typedef struct s_line
     struct s_line *next;
 } t_line;
 
-// "argv"
-// argc
-// fd_in
-// fd_out
-// rede
-// 
+
 void display_prompt(t_list shell);
 char **copy_env(char **env);
 int check_unclosed_quotes(char *input);

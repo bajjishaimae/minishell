@@ -59,7 +59,6 @@ void display_prompt(t_list shell)
     t_node *list;
     (void)shell;
     t_line *lines;
-    // int i = 0;
     while(1)
     {
         input = readline("minishell$  ");
@@ -74,20 +73,7 @@ void display_prompt(t_list shell)
         expand_home(shell.tokens, shell);
         list = search_token(shell.tokens);
         lines = tokens_to_lines(list);
-        // t_line *copy = lines;
         print_lines(lines);
-        // while(copy)
-        // {
-        //     printf("%s\n", copy->tokens->content);
-        //     copy = copy->next;
-        // }
-        // while(shell.tokens[i])
-        // {
-        //     printf("%s       %d\n", shell.tokens[i]->content, shell.tokens[i]->need_expand);
-        //     i++;
-        // }
     }
 }
-        // i = 0;
-        
-        // printf("%d\n", tokens_number(input));
+
