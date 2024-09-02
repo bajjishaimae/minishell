@@ -5,7 +5,6 @@ void print_token(t_node *token)
     printf("Token: %s, Type: %d\n", token->content, token->type);
 }
 
-// Function to print all tokens in a line
 void print_line(t_line *line)
 {
     t_node *current_token = line->tokens;
@@ -18,7 +17,7 @@ void print_line(t_line *line)
     printf("\n");
 }
 
-// Function to print all lines
+
 void print_lines(t_line *lines)
 {
     t_line *current_line = lines;

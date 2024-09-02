@@ -29,6 +29,7 @@ typedef struct s_node
     struct s_node *next;
 } t_node;
 
+
 typedef struct s_line
 {
     t_node *tokens;
