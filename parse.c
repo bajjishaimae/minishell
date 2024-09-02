@@ -6,7 +6,7 @@
 /*   By: cbajji <cbajji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 12:20:30 by cbajji            #+#    #+#             */
-/*   Updated: 2024/08/25 15:48:10 by cbajji           ###   ########.fr       */
+/*   Updated: 2024/08/30 18:30:12 by cbajji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,14 @@ heredoc 3
 infile 4
 outfile 5
 */
-
+void remove_quotes(t_node *token)
+{
+    t_node *current = token;
+    while (current)
+    {
+        
+    }
+}
 void	redirections_classifier(t_node **lst_token)
 {
 	t_node	*current;

@@ -36,7 +36,7 @@ typedef struct s_line
     struct s_line *next;
 } t_line;
 
-// argv
+// "argv"
 // argc
 // fd_in
 // fd_out
